@@ -76,9 +76,14 @@ const addReview = async (
   return result;
 };
 
+const getReviews = async (id: string): Promise<IBook[] | null> => {
+  const result = await Book.find({ _id: id }).select("reviews -_id");
+  return result;
+};
 export const BookService = {
   getAllBooks,
   getBooks,
   getBookDetails,
   addReview,
+  getReviews,
 };
