@@ -56,9 +56,22 @@ const getBookDetails = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const addReview = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const review = req.body.reviews;
+  const result = await BookService.addReview(userId, review);
+
+  sendResponse<IBook>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "add review successfully !",
+    data: result,
+  });
+});
 
 export const BookController = {
   getAllBooks,
   getBooks,
   getBookDetails,
+  addReview,
 };

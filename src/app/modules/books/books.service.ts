@@ -3,7 +3,7 @@ import { paginationHelpers } from "../../../helpers/paginationHelper";
 import { IGenericResponse } from "../../../interface/common";
 import { IPaginationOptions } from "../../../interface/pagination";
 import { booksSearchableFields } from "./books.constant";
-import { IBook, IBooksFilters } from "./books.interface";
+import { IBook, IBooksFilters, IReview } from "./books.interface";
 import { Book } from "./books.model";
 
 const getAllBooks = async (
@@ -67,9 +67,18 @@ const getBookDetails = async (id: string): Promise<IBook[] | null> => {
   const result = await Book.find({ _id: id });
   return result;
 };
+const addReview = async (
+  userId: string,
+  review: string
+): Promise<IBook | null> => {
+  await Book.updateOne({ _id: userId }, { $push: { reviews: review } });
+  const result = await Book.findById(userId);
+  return result;
+};
 
 export const BookService = {
   getAllBooks,
   getBooks,
   getBookDetails,
+  addReview,
 };
