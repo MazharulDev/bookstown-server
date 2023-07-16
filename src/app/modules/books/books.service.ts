@@ -6,6 +6,11 @@ import { booksSearchableFields } from "./books.constant";
 import { IBook, IBooksFilters, IReview } from "./books.interface";
 import { Book } from "./books.model";
 
+const addBook = async (book: IBook): Promise<IBook | null> => {
+  const result = await Book.create(book);
+  return result;
+};
+
 const getAllBooks = async (
   filters: IBooksFilters,
   paginationOptions: IPaginationOptions
@@ -80,10 +85,16 @@ const getReviews = async (id: string): Promise<IBook[] | null> => {
   const result = await Book.find({ _id: id }).select("reviews -_id");
   return result;
 };
+const deleteBook = async (id: string): Promise<object | null> => {
+  const result = await Book.deleteOne({ _id: id });
+  return result;
+};
 export const BookService = {
   getAllBooks,
   getBooks,
   getBookDetails,
   addReview,
   getReviews,
+  addBook,
+  deleteBook,
 };

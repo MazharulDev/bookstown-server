@@ -8,18 +8,16 @@ import { booksFilterableFields } from "./books.constant";
 import { paginationFields } from "../../../constants/pagination";
 import { BookService } from "./books.service";
 
-// const createSemester = catchAsync(async (req: Request, res: Response) => {
-//   const { ...academicSemesterData } = req.body;
-//   const result = await AcademicSemesterService.createSemester(
-//     academicSemesterData
-//   );
-//   sendResponse<IAcademicSemester>(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "academic semester created successfully",
-//     data: result,
-//   });
-// });
+const addBook = catchAsync(async (req: Request, res: Response) => {
+  const book = req.body;
+  const result = await BookService.addBook(book);
+  sendResponse<IBook>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "academic semester created successfully",
+    data: result,
+  });
+});
 
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, booksFilterableFields);
@@ -79,6 +77,17 @@ const getReviews = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const deleteBook = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await BookService.deleteBook(id);
+
+  sendResponse<object>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Delete Book successfully !",
+    data: result,
+  });
+});
 
 export const BookController = {
   getAllBooks,
@@ -86,4 +95,6 @@ export const BookController = {
   getBookDetails,
   addReview,
   getReviews,
+  addBook,
+  deleteBook,
 };

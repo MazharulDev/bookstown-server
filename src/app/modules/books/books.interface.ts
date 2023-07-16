@@ -7,6 +7,7 @@ export type IBook = {
   publicationDate: string;
   img: string;
   price: string;
+  user: string;
   reviews: string[];
   details: string;
 };

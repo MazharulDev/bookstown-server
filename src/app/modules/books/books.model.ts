@@ -27,6 +27,10 @@ export const BookSchema = new Schema<IBook, BookModel>(
       type: String,
       required: true,
     },
+    user: {
+      type: String,
+      required: true,
+    },
     reviews: {
       type: [{ type: String }],
       required: true,
