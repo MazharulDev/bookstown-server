@@ -59,7 +59,12 @@ const getAllBooks = async (
     data: result,
   };
 };
+const getBooks = async (): Promise<IBook[] | null> => {
+  const result = await Book.find({});
+  return result;
+};
 
 export const BookService = {
   getAllBooks,
+  getBooks,
 };
