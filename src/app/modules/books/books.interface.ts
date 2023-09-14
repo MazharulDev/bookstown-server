@@ -5,6 +5,7 @@ export type IBook = {
   author: string;
   genre: string;
   publicationDate: string;
+  favorite?: string[];
   img: string;
   price: string;
   user: string;

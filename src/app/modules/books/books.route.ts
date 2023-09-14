@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", BookController.getAllBooks);
 router.get("/all", BookController.getBooks);
+router.patch("/:id", BookController.updateBook);
 router.get("/details/:id", BookController.getBookDetails);
 router.post("/review/:id", BookController.addReview);
 router.get("/review/:id", BookController.getReviews);

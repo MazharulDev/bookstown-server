@@ -49,6 +49,7 @@ const getAllBooks = async (
     andConditions.length > 0 ? { $and: andConditions } : {};
 
   const result = await Book.find(whereConditions)
+    .populate("favorite")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
@@ -64,12 +65,23 @@ const getAllBooks = async (
     data: result,
   };
 };
+
+const updateBook = async (
+  id: string,
+  payload: Partial<IBook>
+): Promise<IBook | null> => {
+  const result = await Book.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 const getBooks = async (): Promise<IBook[] | null> => {
-  const result = await Book.find({});
+  const result = await Book.find({}).populate("favorite");
   return result;
 };
 const getBookDetails = async (id: string): Promise<IBook[] | null> => {
-  const result = await Book.find({ _id: id });
+  const result = await Book.find({ _id: id }).populate("favorite");
   return result;
 };
 const addReview = async (
@@ -89,6 +101,7 @@ const deleteBook = async (id: string): Promise<object | null> => {
   const result = await Book.deleteOne({ _id: id });
   return result;
 };
+
 export const BookService = {
   getAllBooks,
   getBooks,
@@ -97,4 +110,5 @@ export const BookService = {
   getReviews,
   addBook,
   deleteBook,
+  updateBook,
 };
